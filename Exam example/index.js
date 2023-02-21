@@ -1,56 +1,5 @@
 const prompt = require('prompt-sync')();
-const questions = [
-	{
-		question: "What is the capital of India?",
-		options: ["Delhi", "Mumbai", "Kolkata", "Chennai"],
-		answer: "Delhi"
-	},
-	{
-		question: "What is the capital of Pakistan?",
-		options: ["Islamabad", "Karachi", "Lahore", "Peshawar"],
-		answer: "Islamabad"
-	},
-	{
-		question: "What is the capital of Bangladesh?",
-		options: ["Dhaka", "Chittagong", "Khulna", "Rajshahi"],
-		answer: "Dhaka"
-	},
-	{
-		question: "What is the capital of Nepal?",
-		options: ["Kathmandu", "Pokhara", "Biratnagar", "Lalitpur"],
-		answer: "Kathmandu"
-	},
-	{
-		question: "What is the capital of Bhutan?",
-		options: ["Thimphu", "Paro", "Punakha", "Phuntsholing"],
-		answer: "Thimphu"
-	},
-	{
-		question: "What is the capital of Sri Lanka?",
-		options: ["Colombo", "Kandy", "Galle", "Jaffna"],
-		answer: "Colombo"
-	},
-	{
-		question: "What is the capital of Brazil?",
-		options: ["Brasilia", "Rio de Janeiro", "Sao Paulo", "Salvador"],
-		answer: "Brasilia"
-	},
-	{
-		question: "What is the capital of Argentina?",
-		options: ["Buenos Aires", "Cordoba", "Rosario", "Mendoza"],
-		answer: "Buenos Aires"
-	},
-	{
-		question: "What is the capital of Chile?",
-		options: ["Santiago", "Valparaiso", "Concepcion", "Antofagasta"],
-		answer: "Santiago"
-	},
-	{
-		question: "What is the capital of Peru?",
-		options: ["Lima", "Arequipa", "Trujillo", "Chiclayo"],
-		answer: "Lima"
-	}
-]
+const questions = require('./questionsMock');
 
 function startProgram(questionsSample, currentChance = 1, scores = []) {
 	// Start the program
@@ -92,7 +41,7 @@ function startProgram(questionsSample, currentChance = 1, scores = []) {
 function shouldShowWrongAnswers(wrongAnswers) {
 	if (wrongAnswers.length > 0) {
 		console.log('Do you want to see the wrong answers? (Y/N)');
-		const showWrongAnswers = prompt().toUpperCase();
+		const showWrongAnswers = prompt()?.toUpperCase();
 		if (showWrongAnswers === "Y") {
 			wrongAnswers.forEach(answer => {
 				console.log(`Question: ${answer.question} \nYour Answer: ${answer.answer}`);
@@ -113,7 +62,7 @@ function getMaximumScore(scores) {
 }
 
 function shouldRestarExam(questionsSample, currentChance, scores) {
-	const tryAgain = prompt("Do you want to try again? (Y/N)").toUpperCase();
+	const tryAgain = prompt("Do you want to try again? (Y/N)")?.toUpperCase();
 	if (tryAgain === "Y")
 		startProgram(questionsSample, currentChance, scores);
 }
