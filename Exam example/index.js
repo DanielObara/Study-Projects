@@ -74,7 +74,6 @@ function startProgram(questionsSample, currentChance = 1, scores = []) {
 			const isCorrectAnswer = currentQuestion.options[indexOfAnswer] === currentQuestion.answer;
 
 			isCorrectAnswer ? score++ : wrongAnswers.push({ question: currentQuestion.question, answer: currentQuestion.options[indexOfAnswer] });
-			console.log("🚀 ~ file: index.js:77 ~ startProgram ~ wrongAnswers:", wrongAnswers)
 
 			//Remove the question from the current questions
 			currentQuestions.splice(randomIndex, 1);
@@ -111,11 +110,6 @@ function exceededMaxChance(scores) {
 function getMaximumScore(scores) {
 	// Get the maximum score
 	return Math.max(...scores);
-}
-
-function calculateScore(isCorrectAnswer, score) {
-
-	return score;
 }
 
 function shouldRestarExam(questionsSample, currentChance, scores) {
