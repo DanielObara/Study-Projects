@@ -59,6 +59,7 @@ function startProgram(questionsSample, currentChance = 1, scores = []) {
 	let score = 0;
 	const optionLetters = ["A", "B", "C", "D"];
 	if (currentChance <= maxChance) {
+		const wrongAnswers = [];
 		console.log("Current chance: ", currentChance);
 
 		for (let index = 0; index < questionsSample.length; index++) {
@@ -70,7 +71,10 @@ function startProgram(questionsSample, currentChance = 1, scores = []) {
 			userAnswer = formattedAnswer(userAnswer)
 			const indexOfAnswer = optionLetters.indexOf(userAnswer)
 
-			score = calculateScore(currentQuestion, indexOfAnswer, score);
+			const isCorrectAnswer = currentQuestion.options[indexOfAnswer] === currentQuestion.answer;
+
+			isCorrectAnswer ? score++ : wrongAnswers.push({ question: currentQuestion.question, answer: currentQuestion.options[indexOfAnswer] });
+			console.log("🚀 ~ file: index.js:77 ~ startProgram ~ wrongAnswers:", wrongAnswers)
 
 			//Remove the question from the current questions
 			currentQuestions.splice(randomIndex, 1);
@@ -78,11 +82,24 @@ function startProgram(questionsSample, currentChance = 1, scores = []) {
 		currentChance++;
 		showExamOverview(score, questionsSample);
 		scores.push(score);
+		shouldShowWrongAnswers(wrongAnswers);
 		shouldRestarExam(questionsSample, currentChance, scores);
 	} else {
 		exceededMaxChance(scores);
 	}
 
+}
+
+function shouldShowWrongAnswers(wrongAnswers) {
+	if (wrongAnswers.length > 0) {
+		console.log('Do you want to see the wrong answers? (Y/N)');
+		const showWrongAnswers = prompt().toUpperCase();
+		if (showWrongAnswers === "Y") {
+			wrongAnswers.forEach(answer => {
+				console.log(`Question: ${answer.question} \nYour Answer: ${answer.answer}`);
+			});
+		}
+	}
 }
 
 function exceededMaxChance(scores) {
@@ -96,9 +113,8 @@ function getMaximumScore(scores) {
 	return Math.max(...scores);
 }
 
-function calculateScore(currentQuestion, indexOfAnswer, score) {
-	const isCorrectAnswer = currentQuestion.options[indexOfAnswer] === currentQuestion.answer;
-	isCorrectAnswer ? score++ : score;
+function calculateScore(isCorrectAnswer, score) {
+
 	return score;
 }
 
@@ -124,7 +140,7 @@ function formatQuestionOptions(options, optionLetters = ["A", "B", "C", "D"]) {
 
 function formattedAnswer(answer) {
 	// Format the answer remove the dot and make it uppercase
-	const formatted = answer.substring(0, 1).toUpperCase();
+	const formatted = answer?.substring(0, 1).toUpperCase();
 	return formatted;
 }
 
