@@ -1,5 +1,12 @@
 {
-  "Devdependencies": {
+  "name": "exam-project",
+  "version": "1.0.0",
+  "description": "Just a challenge to study and practice",
+  "main": "index.js",
+  "repository": "https://github.com/DanielObara/Study-Projects",
+  "author": "Daniel Obara",
+  "license": "MIT",
+  "devDependencies": {
     "prompt-sync": "^4.2.0"
   }
 }
