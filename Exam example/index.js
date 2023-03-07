@@ -1,4 +1,4 @@
-const prompt = require('prompt-sync')();
+const prompt = require('prompt-sync')({ sigint: true });
 const questions = require('./questionsMock');
 
 function startProgram(questionsSample, currentChance = 1, scores = []) {
@@ -20,9 +20,11 @@ function startProgram(questionsSample, currentChance = 1, scores = []) {
 			userAnswer = formattedAnswer(userAnswer)
 			const indexOfAnswer = optionLetters.indexOf(userAnswer)
 
-			const isCorrectAnswer = currentQuestion.options[indexOfAnswer] === currentQuestion.answer;
+			const currentAnswer = currentQuestion.options[indexOfAnswer]
 
-			isCorrectAnswer ? score++ : wrongAnswers.push({ question: currentQuestion.question, answer: currentQuestion.options[indexOfAnswer] });
+			const isCorrectAnswer = currentAnswer === currentQuestion.answer;
+
+			isCorrectAnswer ? score++ : wrongAnswers.push({ question: currentQuestion.question, answer: currentAnswer });
 
 			//Remove the question from the current questions
 			currentQuestions.splice(randomIndex, 1);
@@ -68,7 +70,8 @@ function shouldRestarExam(questionsSample, currentChance, scores) {
 }
 
 function showExamOverview(score, questionsSample) {
-	score >= 6 ? console.log("You passed the exam") : console.log("You failed the exam");
+	const passScore = 6
+	score >= passScore ? console.log("You passed the exam") : console.log("You failed the exam");
 	console.log("Your score is: ", score);
 	console.log(`Your percentage is: ${(score / questionsSample.length) * 100}%`);
 }
